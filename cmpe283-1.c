@@ -29,7 +29,6 @@ struct capability_info {
 };
 
 
-
 /*
  * Pinbased capabilities
  * See SDM volume 3, section 24.6.1
@@ -42,7 +41,12 @@ struct capability_info pinbased[5] =
 	{ 6, "Activate VMX Preemption Timer" },
 	{ 7, "Process Posted Interrupts" }
 };
-// Procbased Controls
+
+
+/*
+ * Procbased Controls
+ * See SDM volume 3, section 24.6.2
+ */
 struct capability_info procbased[21] =
 {
 {2 , "Interrupt-window exiting" },
@@ -68,9 +72,11 @@ struct capability_info procbased[21] =
 {31 , "Activate secondary controls" }
 };
 
-
-//  Procbased_ctls2 Controls
-struct capability_info procbased_ctls2[26] =
+/*
+ * Procbased_ctls2 Controls 
+ * See SDM volume 3, section 24.6.2
+ */
+struct capability_info procbased_ctls2[27] =
 {
 { 0, "Virtualize APIC accesses" },
 { 1, "Enable EPT" },
@@ -102,8 +108,11 @@ struct capability_info procbased_ctls2[26] =
 };
 
 
-// VM-Exit Controls
-struct capability_info exit[14] =
+/*
+ * VM-Exit Controls 
+ * See SDM volume 3, section 24.7
+ */
+struct capability_info vm_exit[14] =
 {
 { 2, "Save debug controls" },
 { 9, "Host addressspace size" },
@@ -111,7 +120,7 @@ struct capability_info exit[14] =
 { 15, "Acknowledge interrupt on exit" },
 { 18, "Save IA32_PAT" },
 { 19, "Load IA32_PAT" },
-{ 20, "Save IA32_EEFR" },
+{ 20, "Save IA32_EFER" },
 { 21, "Load IA32_EFER" },
 { 22, "Save VMXpreemption timer value" },
 { 23, "Clear IA32_BNDCFGS" },
@@ -121,8 +130,12 @@ struct capability_info exit[14] =
 { 29, "Load PKRS" },
 };
 
-// VM Entry Controls
-struct capability_info entry[12] =
+
+/*
+ * VM Entry Controls
+ * See SDM volume 3, section 24.8
+ */
+struct capability_info vm_entry[12] =
 {
 { 2, "Load debug controls" },
 { 9, "IA-32e mode guest" },
@@ -137,6 +150,7 @@ struct capability_info entry[12] =
 { 20, "Load CET state" },
 { 22, "Load PKRS" }
 };
+
 
 /*
  * report_capability
@@ -186,7 +200,7 @@ detect_vmx_features(void)
 		(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(pinbased, 5, lo, hi);
 
-	/* Procbased controls */
+        /* Procbased controls */
 	rdmsr(IA32_VMX_PROCBASED_CTLS, lo, hi);
 	pr_info("Procbased Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
@@ -202,13 +216,13 @@ detect_vmx_features(void)
 	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
 	pr_info("Exit Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(exit, 14, lo, hi);
+	report_capability(vm_exit, 14, lo, hi);
 	
 	/* Entry controls */
 	rdmsr(IA32_VMX_ENTRY_CTLS, lo, hi);
 	pr_info("Entry Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(entry, 12, lo, hi);	
+	report_capability(vm_entry, 12, lo, hi);
 }
 
 /*
