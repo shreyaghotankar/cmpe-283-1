@@ -5,4 +5,4 @@
 #### Student: Shreya Ghotankar
 
 
-[embed]https://github.com/shreyaghotankar/cmpe-283-1/blob/main/CMPE283-Assignment-1.pdf[/embed]
+![](CMPE283-Assignment-1.pdf)
