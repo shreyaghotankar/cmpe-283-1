@@ -43,7 +43,7 @@ Kernel Code Compilation :
    <img src="screenshots/Picture12.png"/>
 7. Downloaded the Makefile and cmpe283-1.c file from the SJSU canvas
  * Build the file using make
-   <img src="screeshots/Picture1.png"/>
+   <img src="screenshots/Picture1.png"/>
  * After building the file check if there is kernel object file is created.
     <img src="screenshots/Picture2.png"/>
  * After sudo insmod ./cmpe283-1.ko and dmesg the configuration of kernel is –
